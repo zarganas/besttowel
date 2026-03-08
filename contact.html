@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Contact Us | Best Towel</title>
   <style>
     body, html {
@@ -58,6 +58,7 @@
       width: 100%;
       text-align: center;
       box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      box-sizing: border-box;
     }
     h2 {
       font-size: 2.5em;
@@ -67,7 +68,7 @@
     }
     .contact-link {
       display: block;
-      margin: 20px 0;
+      margin: 20px auto;
       font-size: 1.3em;
       color: #2c3e50;
       text-decoration: none;
@@ -77,15 +78,25 @@
       padding: 15px;
       border-radius: 8px;
       border: 1px solid #ddd;
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+      word-break: break-all;
     }
     .contact-link:hover {
       color: #34495e;
       border-color: #34495e;
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
-    @media (max-width: 600px) {
-      .content-box { padding: 25px; }
-      .navbar { gap: 15px; font-size: 0.9em; }
+    
+    /* Mobil Uyumluluk (Responsive) */
+    @media (max-width: 768px) {
+      .navbar { gap: 15px; padding: 12px 10px; flex-wrap: wrap; }
+      .navbar a { font-size: 1em; }
+      .content-box { padding: 25px 15px; }
+      h2 { font-size: 2em; margin-bottom: 20px; }
+      .contact-link { font-size: 1.1em; padding: 12px; margin: 15px auto; }
+      .bg-container { padding: 90px 10px 20px 10px; }
     }
   </style>
 </head>
