@@ -1,1186 +1,146 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GENÇEFENDİ - Sayı 1 | Mart 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-red: #E31E24;
-            --dark-red: #B91C1C;
-            --chp-red: #E31E24;
-            --white: #FFFFFF;
-            --black: #1A1A1A;
-            --gray: #6B7280;
-            --light-gray: #F3F4F6;
-            --cream: #FDF8F3;
-            --gold: #D4AF37;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .book-container {
-            perspective: 2000px;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .book {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1.4;
-            transform-style: preserve-3d;
-        }
-
-        .page {
-            position: absolute;
-            width: 50%;
-            height: 100%;
-            top: 0;
-            background: var(--white);
-            transform-origin: left center;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        .page.right {
-            left: 50%;
-            transform-origin: right center;
-            border-left: 1px solid #e5e5e5;
-        }
-
-        .page.flipped {
-            transform: rotateY(-180deg);
-        }
-
-        .page.right.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .page-content {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            padding: 30px;
-            backface-visibility: hidden;
-            overflow-y: auto;
-        }
-
-        .page-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            transform: rotateY(180deg);
-            background: var(--white);
-        }
-
-        /* Kapak Tasarımı */
-        .cover-front {
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .cover-front h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .cover-front .subtitle {
-            font-size: 1.2rem;
-            letter-spacing: 0.3em;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
-
-        .cover-front .issue-info {
-            font-size: 1rem;
-            letter-spacing: 0.2em;
-            margin-top: 60px;
-            padding: 15px 30px;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .cover-back {
-            background: var(--black);
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-        }
-
-        .cover-back h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 30px;
-            color: var(--gold);
-        }
-
-        .team-list {
-            text-align: center;
-            line-height: 2;
-            font-size: 0.9rem;
-        }
-
-        /* İçerik Sayfaları */
-        .content-page {
-            background: var(--cream);
-        }
-
-        .page-header {
-            border-bottom: 3px solid var(--primary-red);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
-
-        .page-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--black);
-            margin-bottom: 5px;
-        }
-
-        .page-header .author {
-            color: var(--gray);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .article-content {
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: var(--black);
-            text-align: justify;
-        }
-
-        .article-content p {
-            margin-bottom: 15px;
-            text-indent: 20px;
-        }
-
-        .article-content p:first-child {
-            text-indent: 0;
-        }
-
-        .article-content p:first-child::first-letter {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            float: left;
-            line-height: 1;
-            padding-right: 10px;
-            color: var(--primary-red);
-        }
-
-        /* İçindekiler */
-        .toc-page {
-            background: var(--white);
-        }
-
-        .toc-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--primary-red);
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px solid var(--primary-red);
-            padding-bottom: 15px;
-        }
-
-        .toc-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            padding: 12px 0;
-            border-bottom: 1px dotted var(--gray);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .toc-item:hover {
-            color: var(--primary-red);
-            padding-left: 10px;
-        }
-
-        .toc-item .title {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .toc-item .author {
-            font-size: 0.85rem;
-            color: var(--gray);
-            font-style: italic;
-        }
-
-        .toc-item .page-num {
-            font-weight: 700;
-            color: var(--primary-red);
-        }
-
-        /* Alıntı Kutuları */
-        .quote-box {
-            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
-            color: var(--white);
-            padding: 25px;
-            margin: 25px 0;
-            border-radius: 8px;
-            font-style: italic;
-            position: relative;
-        }
-
-        .quote-box::before {
-            content: '"';
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            position: absolute;
-            top: -10px;
-            left: 10px;
-            opacity: 0.3;
-        }
-
-        .quote-box p {
-            text-indent: 0 !important;
-            margin: 0;
-            padding-left: 30px;
-        }
-
-        /* Navigasyon */
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            background: var(--primary-red);
-            color: var(--white);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn:hover {
-            background: var(--dark-red);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(227, 30, 36, 0.4);
-        }
-
-        .btn:disabled {
-            background: var(--gray);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .page-indicator {
-            background: rgba(255,255,255,0.1);
-            color: var(--white);
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-weight: 600;
-        }
-
-        /* Bölüm Başlıkları */
-        .section-divider {
-            background: var(--black);
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .section-divider h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-        }
-
-        .section-divider .section-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        /* Mobil Uyum */
-        @media (max-width: 768px) {
-            .book {
-                aspect-ratio: 0.7;
-            }
-
-            .page {
-                width: 100%;
-                left: 0;
-            }
-
-            .page.right {
-                left: 0;
-                display: none;
-            }
-
-            .page.right.active {
-                display: block;
-            }
-
-            .cover-front h1 {
-                font-size: 2.5rem;
-            }
-
-            .page-content {
-                padding: 20px;
-            }
-
-            .article-content {
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Özel Sayfa Tasarımları */
-        .poem-page {
-            background: linear-gradient(180deg, var(--cream) 0%, #fff 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .poem-page .poem-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            line-height: 2.2;
-            color: var(--black);
-            max-width: 80%;
-        }
-
-        .poem-page .poem-author {
-            margin-top: 30px;
-            color: var(--gray);
-            font-style: italic;
-        }
-
-        /* Bulmaca Sayfası */
-        .puzzle-page {
-            background: var(--white);
-        }
-
-        .puzzle-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .puzzle-section h4 {
-            color: var(--primary-red);
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-
-        .puzzle-clue {
-            font-size: 0.85rem;
-            line-height: 1.6;
-            margin-bottom: 8px;
-            padding-left: 15px;
-            position: relative;
-        }
-
-        .puzzle-clue::before {
-            content: attr(data-num);
-            position: absolute;
-            left: 0;
-            color: var(--primary-red);
-            font-weight: bold;
-        }
-
-        /* Anma Sayfası */
-        .memorial-page {
-            background: linear-gradient(180deg, #1a1a2e 0%, #2d2d44 100%);
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .memorial-page h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 30px;
-            color: var(--gold);
-        }
-
-        .memorial-page .candle {
-            font-size: 4rem;
-            margin-bottom: 30px;
-            animation: flicker 2s infinite;
-        }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .memorial-page p {
-            font-size: 1.1rem;
-            line-height: 2;
-            max-width: 80%;
-        }
-
-        /* Bilgi Kutuları */
-        .info-box {
-            background: var(--light-gray);
-            border-left: 4px solid var(--primary-red);
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .info-box h4 {
-            color: var(--primary-red);
-            margin-bottom: 10px;
-        }
-
-        .info-box ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .info-box li {
-            padding: 8px 0;
-            padding-left: 20px;
-            position: relative;
-            font-size: 0.9rem;
-        }
-
-        .info-box li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--primary-red);
-        }
-
-        /* Scrollbar */
-        .page-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .page-content::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        .page-content::-webkit-scrollbar-thumb {
-            background: var(--primary-red);
-            border-radius: 3px;
-        }
-
-        /* Hukuk Köşesi Özel */
-        .legal-tips {
-            background: #1a1a2e;
-            color: var(--white);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-
-        .legal-tips h4 {
-            color: var(--gold);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .legal-tips ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .legal-tips li {
-            padding: 10px 0;
-            padding-left: 25px;
-            position: relative;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .legal-tips li::before {
-            content: '⚖';
-            position: absolute;
-            left: 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Best Towel</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100%;
+      color: #333;
+    }
+    .bg-container {
+      background-image: url('https://images.unsplash.com/photo-1616627547584-bf28cee262db?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .content-box {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 40px;
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 2.5em;
+    }
+    p.description {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      color: #444;
+    }
+    .contact-info {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      border: 1px solid #e9ecef;
+    }
+    .contact-info h2 {
+      font-size: 1.5em;
+      margin-top: 0;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    .contact-info p {
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+    .partners-section h3 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 1.3em;
+    }
+    .partners-grid {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .partner-item {
+      background: #fff;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #7f8c8d;
+      border: 1px solid #ddd;
+      flex: 1 1 auto;
+      min-width: 150px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .partner-item:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+      border-color: #bdc3c7;
+    }
+    .partner-logo {
+      height: 30px;
+      width: auto;
+      margin-right: 10px;
+      object-fit: contain;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      .content-box { padding: 25px; }
+      .partner-item { width: 100%; box-sizing: border-box; }
+    }
+  </style>
 </head>
 <body>
-    <div class="book-container">
-        <div class="book" id="book">
-            <!-- Sayfalar JavaScript ile oluşturulacak -->
+  <div class="bg-container">
+    <div class="content-box">
+      <h1>Best Towel</h1>
+      
+      <p class="description">
+        Where quality meets comfort. We add value to living spaces by offering our customers the most exclusive and durable products. We are your reliable partner for wholesale and corporate solutions.
+      </p>
+      
+      <div class="contact-info">
+        <h2>Contact Us</h2>
+        <p>📞 +90 555 123 45 67</p>
+        <p>✉️ info@besttowel.com</p>
+        <p>📍 Merkez District, Ticaret Ave. No:1, Istanbul, Turkey</p>
+      </div>
+
+      <div class="partners-section">
+        <h3>Our Business Partners</h3>
+        <div class="partners-grid">
+          <a href="ENTER_URL_HERE_A" target="_blank" class="partner-item">
+            <img src="https://via.placeholder.com/100x40?text=Logo+A" alt="Partner Company A Logo" class="partner-logo">
+            <span>Partner Company A</span>
+          </a>
+          <a href="ENTER_URL_HERE_B" target="_blank" class="partner-item">
+            <img src="https://via.placeholder.com/100x40?text=Logo+B" alt="Partner Company B Logo" class="partner-logo">
+            <span>Partner Company B</span>
+          </a>
+          <a href="ENTER_URL_HERE_C" target="_blank" class="partner-item">
+            <img src="https://via.placeholder.com/100x40?text=Logo+C" alt="Partner Company C Logo" class="partner-logo">
+            <span>Partner Company C</span>
+          </a>
         </div>
+      </div>
     </div>
-
-    <div class="controls">
-        <button class="btn" id="prevBtn" onclick="prevPage()">
-            <span>←</span> Önceki
-        </button>
-        <span class="page-indicator" id="pageIndicator">1 / 28</span>
-        <button class="btn" id="nextBtn" onclick="nextPage()">
-            Sonraki <span>→</span>
-        </button>
-    </div>
-
-    <script>
-        // Dergi içeriği
-        const pages = [
-            // Sayfa 1-2: Kapak
-            {
-                type: 'cover-front',
-                content: `
-                    <h1>GENÇEFENDİ</h1>
-                    <div class="subtitle">CHP MERKEZEFENDİ GENÇLİK KOLLARI</div>
-                    <div class="issue-info">
-                        SAYI: 1<br>
-                        MART 2026 - DENİZLİ
-                    </div>
-                `
-            },
-            {
-                type: 'cover-back',
-                content: `
-                    <h2>EMEĞİ GEÇENLER</h2>
-                    <div class="team-list">
-                        BİRCE ALTINMAKAS<br>
-                        CEREN ÇAMCI<br>
-                        SÜLEYMAN DAĞDAŞ<br>
-                        UTGAN DEVECİOĞLU<br>
-                        FAHRİ TUNA DOĞAN<br>
-                        ENDER TAHA AKMAN<br>
-                        DEVRİM ECE HAN<br>
-                        KENAN GÜVEN<br>
-                        CEYDA KORKMAZ<br>
-                        HÜSEYİN ÖZDEMİR<br>
-                        ÖMER SARITAŞ<br>
-                        FATİH YILDIRIM
-                    </div>
-                    <div style="margin-top: 40px; font-size: 0.8rem; opacity: 0.7;">
-                        DERLEYENLER<br>
-                        ERKAN KÖKEN<br>
-                        H. CEM YIĞNAK
-                    </div>
-                `
-            },
-            // Sayfa 3-4: İçindekiler
-            {
-                type: 'toc-page',
-                content: `
-                    <h2 class="toc-title">İÇİNDEKİLER</h2>
-                    <div class="toc-item" onclick="goToPage(4)">
-                        <div>
-                            <span class="title">Adalet İçin Mücadele, Gelecek İçin Cesaret</span>
-                            <span class="author">Müjdat İlhan</span>
-                        </div>
-                        <span class="page-num">4</span>
-                    </div>
-                    <div class="toc-item" onclick="goToPage(8)">
-                        <div>
-                            <span class="title">Bilimle, Eşitlikle, Umutla Merkezefendi</span>
-                            <span class="author">Şeniz Doğan</span>
-                        </div>
-                        <span class="page-num">8</span>
-                    </div>
-                    <div class="toc-item" onclick="goToPage(12)">
-                        <div>
-                            <span class="title">Özgürlüğün Mimarı, Demokrasinin Teminatı</span>
-                            <span class="author">Birce Altınmakas</span>
-                        </div>
-                        <span class="page-num">12</span>
-                    </div>
-                    <div class="toc-item" onclick="goToPage(16)">
-                        <div>
-                            <span class="title">Hitabe</span>
-                            <span class="author">Görkem Ünlü</span>
-                        </div>
-                        <span class="page-num">16</span>
-                    </div>
-                    <div class="toc-item" onclick="goToPage(18)">
-                        <div>
-                            <span class="title">Kadın ve Siyaset</span>
-                            <span class="author">Servet Tetik</span>
-                        </div>
-                        <span class="page-num">18</span>
-                    </div>
-                    <div class="toc-item" onclick="goToPage(20)">
-                        <div>
-                            <span class="title">Eleştirel Teori Üzerine</span>
-                            <span class="author">Fatih Yıldırım</span>
-                        </div>
-                        <span class="page-num">20</span>
-                    </div>
-                    <div class="toc-item" onclick="goToPage(24)">
-                        <div>
-                            <span class="title">Türk Gençliği; Daima İleri!</span>
-                            <span class="author">Erkan Köken</span>
-                        </div>
-                        <span class="page-num">24</span>
-                    </div>
-                    <div class="toc-item" onclick="goToPage(26)">
-                        <div>
-                            <span class="title">Bulmaca</span>
-                            <span class="author">Eğlence Köşesi</span>
-                        </div>
-                        <span class="page-num">26</span>
-                    </div>
-                    <div class="toc-item" onclick="goToPage(27)">
-                        <div>
-                            <span class="title">Seni Unutmayacağız Naci Ağabey...</span>
-                            <span class="author">Anma</span>
-                        </div>
-                        <span class="page-num">27</span>
-                    </div>
-                `
-            },
-            {
-                type: 'section-divider',
-                content: `
-                    <div class="section-icon">✦</div>
-                    <h2>ADALET İÇİN MÜCADELE,<br>GELECEK İÇİN CESARET</h2>
-                    <p style="margin-top: 20px; opacity: 0.8;">Müjdat İlhan<br>CHP Merkezefendi İlçe Başkanı</p>
-                `
-            },
-            // Sayfa 5-6: Müjdat İlhan Yazısı Bölüm 1
-            {
-                type: 'content-page',
-                title: 'Adalet İçin Mücadele, Gelecek İçin Cesaret',
-                author: 'Müjdat İlhan',
-                content: `
-                    <p>1972 yılında Denizli'nin Alikurt Köyü'nde doğdum. İlk ve orta öğrenimimi Denizli'de tamamladıktan sonra 1989 yılında İstanbul Üniversitesi Hukuk Fakültesi'ni kazandım. 1995 yılında mezun olduktan sonra avukatlık stajımı ve askerlik görevimi tamamlayarak 1997 yılından itibaren Denizli Barosu'na kayıtlı serbest avukat olarak meslek hayatıma başladım.</p>
-                    
-                    <p>Siyasete genç yaşlarda Cumhuriyet Halk Partisi saflarında adım attım. 1998 yılında CHP Denizli İl Gençlik Kolları Başkanı olarak aktif siyasete başladım. O dönemde gençlik kollarının daha güçlü bir örgüt yapısına kavuşması için üniversite gençliğini de içine alan bir örgütlenme modeli oluşturduk ve Denizli'de uzun yıllar sonra ilk kez üniversite gençliği ile partimizi aynı mücadele zemininde buluşturduk.</p>
-                    
-                    <p>1998–2008 yılları arasında Cumhuriyet Halk Partisi il yönetimlerinde çeşitli görevler üstlendim. 2008 yılında CHP Merkez İlçe Başkanlığı görevini yürüttüm. 2009–2011 yılları arasında ise Denizli Belediye Meclisi Üyesi olarak görev yaptım ve aynı dönemde Cumhuriyet Halk Partisi Belediye Meclis Grubu Başkan Vekilliği sorumluluğunu üstlendim.</p>
-                `
-            },
-            {
-                type: 'content-page',
-                title: 'Adalet İçin Mücadele, Gelecek İçin Cesaret',
-                author: 'Müjdat İlhan',
-                content: `
-                    <p>2006–2010 yılları arasında Denizli Barosu Yönetim Kurulu'nda görev aldım. 2011 yılı Mayıs ayında başladığım Denizli Barosu Başkanlığı görevini 2021 yılı Temmuz ayına kadar kesintisiz olarak sürdürdüm. Bu süreçte seçim hukuku ve seçim güvenliği konusunda önemli çalışmalar yürüttük, sandık görevlilerinin eğitiminden seçimlerin hukuka uygun yürütülmesine kadar birçok alanda sahada aktif görev aldık.</p>
-                    
-                    <p>Aynı dönemde 28 sivil toplum kuruluşu ve siyasi partinin yer aldığı Denizli Demokrasi Platformu'nun dönem sözcülüğünü yürüttüm. Kadına yönelik şiddetle mücadele kapsamında Denizli Barosu bünyesinde Kadına ve Çocuğa Yönelik Şiddetin Önlenmesi Merkezi'nin kurulmasına öncülük ederek sosyal sorumluluğu yüksek bir çalışmayı hayata geçirdik.</p>
-                    
-                    <div class="quote-box">
-                        <p>Bugün Cumhuriyet Halk Partisi Merkezefendi İlçe Başkanı olarak görev yapıyorum. Bu görev benim için yalnızca bir siyasi unvan değil; demokrasiye, hukuka ve Cumhuriyet değerlerine sahip çıkma sorumluluğudur.</p>
-                    </div>
-                `
-            },
-            // Sayfa 7-8: Müjdat İlhan Yazısı Bölüm 2
-            {
-                type: 'content-page',
-                title: 'Adalet İçin Mücadele, Gelecek İçin Cesaret',
-                author: 'Müjdat İlhan',
-                content: `
-                    <p>2024 yerel seçimleri, Türkiye siyaseti açısından tarihî bir dönüm noktası olmuştur. Halk, yıllardır biriken sorunlara sandıkta güçlü bir cevap vermiştir. Cumhuriyet Halk Partisi, Türkiye'nin dört bir yanında yerel yönetimlerde büyük başarılar elde etmiş, büyükşehirlerden ilçelere kadar halkçı belediyecilik anlayışı yeniden yükselmiştir.</p>
-                    
-                    <p>Bu başarının arkasında örgütlerimizin emeği, belediye başkanlarımızın halkla kurduğu güçlü bağ ve partimizin kararlı duruşu vardır. Aynı zamanda Genel Başkanımızın ortaya koyduğu yoğun çaba ve değişim iradesi de bu sürecin en önemli dinamiklerindendir.</p>
-                    
-                    <p>Ancak sandıkta kaybedenler, halkın iradesini kabul etmek yerine başka yollarla sonuç almaya çalışmaktadır. Bugün Türkiye'de birçok belediye başkanına yönelik açılan soruşturmalar, yürütülen operasyonlar ve siyasi baskılar, bu gerçeğin açık göstergesidir.</p>
-                `
-            },
-            {
-                type: 'section-divider',
-                content: `
-                    <div class="section-icon">◈</div>
-                    <h2>BİLİMLE, EŞİTLİKLE,<br>UMUTLA MERKEZEFENDİ</h2>
-                    <p style="margin-top: 20px; opacity: 0.8;">Şeniz Doğan<br>Merkezefendi Belediye Başkanı</p>
-                `
-            },
-            // Sayfa 9-10: Şeniz Doğan Yazısı Bölüm 1
-            {
-                type: 'content-page',
-                title: 'Bilimle, Eşitlikle, Umutla Merkezefendi',
-                author: 'Şeniz Doğan',
-                content: `
-                    <p>1980 yılında Denizli'nin Bekilli ilçesinde doğdum. İlk ve ortaöğrenimimi Denizli'de tamamladıktan sonra Londra'da İngilizce dil eğitimi aldım. 2002 yılında Hukuk Fakültesi'nden mezun olarak avukatlık mesleğine başladım. Meslek hayatım boyunca hukukun, adaletin ve toplumsal sorumluluğun rehberliğinde çalıştım.</p>
-                    
-                    <p>2014 yılında Merkezefendi ve Denizli Büyükşehir Belediye Meclis Üyeliklerine seçilerek yerel yönetimlerde aktif görev üstlendim. 31 Mart 2019'da Merkezefendi Belediye Başkanı olarak göreve başladım. 31 Mart 2024'te hemşehrilerimin güvenoyuyla bir kez daha bu onurlu göreve layık görüldüm.</p>
-                    
-                    <p>Belediye başkanlığını yalnızca bir makam değil, güçlü bir toplumsal sorumluluk alanı olarak görüyorum. Attığımız her adımda yalnızca fiziki yatırımları değil, sosyal dönüşümü de öncelik kabul ediyoruz.</p>
-                `
-            },
-            {
-                type: 'content-page',
-                title: 'Bilimle, Eşitlikle, Umutla Merkezefendi',
-                author: 'Şeniz Doğan',
-                content: `
-                    <p>Ekonomik koşulların zorlaştığı dönemlerde sosyal belediyecilik anlayışımızı büyüttük. Halk Süt, Halk Ekmek Fabrikası, Halk Et ve Halk Market uygulamalarımızla hemşehrilerimizin sağlıklı ve uygun fiyatlı ürünlere erişimini sağlıyor, aile bütçelerine katkıda bulunuyoruz.</p>
-                    
-                    <p>Eğitimi geleceğe yapılan en güçlü yatırım olarak görüyoruz. İlçemize kazandırdığımız kreşlerle çocuklarımızın çağdaş eğitimle buluşmasını sağlarken, kadınların istihdama katılımını da destekliyoruz.</p>
-                    
-                    <div class="quote-box">
-                        <p>Merkezefendi Belediyesi olarak bilimi ve çağdaş eğitimi güçlendirmek amacıyla ilçemize kazandırdığımız Atatürk Bilim Merkezi, çocuklarımızın ve gençlerimizin bilimle erken yaşta tanışmasını sağlıyor.</p>
-                    </div>
-                    
-                    <p>Kadın Çocuk Yaşam Merkezlerimiz bugün 20 farklı bölgede hizmet veriyor. On binlerce kadınımız ve çocuğumuz bu merkezlerde eğitimden sanata, spordan sosyal etkinliklere kadar pek çok alanda destek alıyor.</p>
-                `
-            },
-            // Sayfa 11-12: Şeniz Doğan Yazısı Bölüm 2
-            {
-                type: 'content-page',
-                title: 'Bilimle, Eşitlikle, Umutla Merkezefendi',
-                author: 'Şeniz Doğan',
-                content: `
-                    <p>Şehrimizi sadece beton yapılarla değil, doğayla birlikte büyütüyoruz. Tematik ve yeşil parklarımızla çocuklarımızın güvenle oynayabileceği, ailelerimizin nefes alabileceği alanlar oluşturduk. Yeşili koruyan, çevreye duyarlı bir Merkezefendi inşa etmek bizim için vazgeçilmezdir.</p>
-                    
-                    <p>Yönetim anlayışımızın temelinde şeffaflık, bilimsellik ve katılımcılık var. Gazi Mustafa Kemal Atatürk'ün açtığı yolda aklı ve bilimi rehber edinerek, ortak akılla hareket ediyoruz.</p>
-                    
-                    <p>2019'dan bu yana "Ortak Akıl" anlayışıyla ilçemizi birlikte yönetiyoruz. İki dönemdir hemşehrilerimiz, sivil toplum kuruluşlarımız ve tüm paydaşlarımız bu sürecin parçası.</p>
-                    
-                    <div class="info-box">
-                        <h4>2024 Yılında Merkezefendi'de:</h4>
-                        <ul>
-                            <li>20 Kadın Çocuk Yaşam Merkezi</li>
-                            <li>Atatürk Bilim Merkezi</li>
-                            <li>Alzheimer Yaşam Merkezi</li>
-                            <li>Halk Market ve Üretim Tesisleri</li>
-                        </ul>
-                    </div>
-                `
-            },
-            {
-                type: 'section-divider',
-                content: `
-                    <div class="section-icon">⚖</div>
-                    <h2>ÖZGÜRLÜĞÜN MİMARI,<br>DEMOKRASİNİN TEMİNATI</h2>
-                    <p style="margin-top: 20px; opacity: 0.8;">Birce Altınmakas<br>CHP Merkezefendi Gençlik Kolları Yöneticisi</p>
-                `
-            },
-            // Sayfa 13-14: Birce Altınmakas Yazısı
-            {
-                type: 'content-page',
-                title: 'Toplantı ve Gösteri Yürüyüşü Düzenleme Hakkı',
-                author: 'Birce Altınmakas',
-                content: `
-                    <p>Değerli Yol Arkadaşlarım, Mücadele Ortaklarım, Genç Yoldaşlarım;</p>
-                    
-                    <p>Cumhuriyet Halk Partisi çatısı altında, Denizli'nin kalbi Merkezefendi'de omuz omuza saf tuttuğumuz bu onurlu yolda, sizleri hem bu kavganın bir neferi hem de bir hukukçu dostunuz olarak selamlıyorum.</p>
-                    
-                    <div class="quote-box">
-                        <p>Ata'mızdan Aldığımız Talimat: "Muhtaç Olduğun Kudret Damarlarındaki Asil Kanda Mevcuttur."</p>
-                    </div>
-                    
-                    <p>Bizler, "Ey Türk gençliği! Birinci vazifen..." diye başlayan o eşsiz vasiyetin doğrudan muhataplarıyız. Büyük Önder Gazi Mustafa Kemal Atatürk, Gençliğe Hitabe'de bizlere sadece bir istikbal değil, aynı zamanda o istikbali her türlü zorluk altında koruma ve müdafaa etme sorumluluğunu yüklemiştir.</p>
-                    
-                    <p>Bugün demokratik haklarımızı kullanırken karşımıza çıkarılan engeller, aslında Cumhuriyetin kalelerine örülmek istenen duvarlardır.</p>
-                `
-            },
-            {
-                type: 'content-page',
-                title: 'Anayasal Güvence: İzin Değil, Bildirim!',
-                author: 'Birce Altınmakas',
-                content: `
-                    <p>Hukuk sistemimizde bazı haklar vardır ki, devletin onayıyla değil, insanın varlığıyla hayat bulur. Anayasamızın 34. maddesi tam da bu noktada durmaktadır:</p>
-                    
-                    <div class="quote-box">
-                        <p>"Herkes, önceden izin almaksızın, silahsız ve saldırısız toplantı ve gösteri yürüyüşü düzenleme hakkına sahiptir."</p>
-                    </div>
-                    
-                    <p>Buradaki "izin almaksızın" ibaresi, bir hukuk devleti için lütuf değil, anayasal bir emirdir.</p>
-                    
-                    <p>Avrupa İnsan Hakları Mahkemesi (AİHM) ve Anayasa Mahkemesi (AYM) kararları da net bir tespitte bulunur: "İktidarları rahatsız eden, sarsan, şoke eden düşünceler de bu hak kapsamında korunur."</p>
-                    
-                    <div class="legal-tips">
-                        <h4>⚖ HUKUK KÖŞESİ: Gözaltı Durumunda Haklarımız</h4>
-                        <ul>
-                            <li><strong>Susma Hakkı:</strong> Kimlik bilgileriniz dışında hiçbir soruya cevap vermeme hakkınız vardır.</li>
-                            <li><strong>Avukat Yardımı:</strong> İlk andan itibaren avukatınızın gelmesini talep edin.</li>
-                            <li><strong>Haber Verme:</strong> Yakınlarınıza veya baroya haber verilmesini isteme hakkına sahipsiniz.</li>
-                            <li><strong>Tutanak Kontrolü:</strong> İfade tutanaklarını okumadan asla imzalamayın.</li>
-                        </ul>
-                    </div>
-                `
-            },
-            // Sayfa 15-16: Görkem Ünlü Yazısı
-            {
-                type: 'section-divider',
-                content: `
-                    <div class="section-icon">✧</div>
-                    <h2>HİTABE</h2>
-                    <p style="margin-top: 20px; opacity: 0.8;">Görkem Ünlü<br>CHP Denizli İl Gençlik Kolları Yöneticisi</p>
-                `
-            },
-            {
-                type: 'content-page',
-                title: 'Hitabe',
-                author: 'Görkem Ünlü',
-                content: `
-                    <p>Atatürk'ün Gençliğe Hitabesi'ni hepimiz biliriz, ama genellikle sadece törenlerde okunan bir motivasyon konuşması gibi algılarız. Halkın genel bakış açısı, Atatürk'ü ve başarılarını hep ileri yaşlardaki tecrübesine bağlama eğilimindedir. Oysa işin aslına baktığımızda, bu büyük sorumluluğun neden gençliğe verildiğini daha iyi anlarız.</p>
-                    
-                    <p>Tarihsel gerçekler, başarının yalnızca yaşla ya da tecrübeyle ilgili olduğu algısını yerle bir ediyor. Mustafa Kemal 1905'te Vatan ve Hürriyet Cemiyetini kurduğunda 24 yaşındaydı, yanındaki Ali Fuat Cebesoy ise 23 yaşındaydı.</p>
-                    
-                    <div class="quote-box">
-                        <p>Meşrutiyet dönemine baktığımızda, Enver Paşa 27, Resneli Niyazi ise 35 yaşındaydı. Hatta Milli Mücadele döneminde Yörük Ali Efe 25, Mahmut Esat Bozkurt ise sadece 20 yaşındaydı.</p>
-                    </div>
-                    
-                    <p>Sivas Kongresi'nde manda fikrine kafa tutan Tıbbiyeli Hikmet 18, tam bağımsızlık ve anti-emperyalizm mücadelesi veren Deniz Gezmiş ise 25 yaşındaydı. Uğur Mumcu'nun memleket meselelerini dert edindiği ve "Türk Sosyalizmi" yazısını kaleme aldığı yaş ise henüz 20'ydi.</p>
-                    
-                    <p>Yani tarih, sanıldığı gibi sadece yaşını başını almış isimlerin değil, enerjisini, kararlığını ve yetkinliğini gösteren gençlerin, idealleri uğruna pek çok şeyden vazgeçebilmesi sayesinde yazıldı.</p>
-                `
-            },
-            // Sayfa 17-18: Servet Tetik Yazısı
-            {
-                type: 'content-page',
-                title: 'Hitabe (Devam)',
-                author: 'Görkem Ünlü',
-                content: `
-                    <p>Ancak bugün geldiğimiz noktada ciddi bir problem var. Ahmet Taner Kışlalı'nın da dediği gibi, bugün gençlerin enerjisi ve bilgisi var ama sorumlulukları yok.</p>
-                    
-                    <p>Gençlerin yaşayacağı gelecek hakkında kararlar, o gelecekte artık bulunmayacak kişiler tarafından, gençlerin fikri dahi alınmadan veriliyor. Bir sistemin yönü ile gençliğin eğilimleri arasında fark açılmaya başlarsa, o toplum için tehlike çanları çalıyor demektir.</p>
-                    
-                    <p>Bizim en büyük hatamız, demokrasiyi sadece seçimden seçime hatırlanan bir sistem sanmak. Oysa demokrasi, ailede, okulda ve her türlü karar mekanizmasında yaşanarak öğrenilen bir hayat tarzıdır.</p>
-                    
-                    <div class="quote-box">
-                        <p>Kurtuluş Savaşı'ndan 68 kuşağına kadar uzanan o bağımsızlık ruhu, gençlerin elini taşın altına sokma cesaretiyle bugüne ulaştı.</p>
-                    </div>
-                    
-                    <p>Bu mirasa gerçekten sahip çıkmak istiyorsak, gençleri sadece "yarının umudu" diyerek kenarda bekletmekten vazgeçmeliyiz. Gençlik susturulduğu ve karar süreçlerinden dışlandığı zaman değil, aksine sorumluluklar edinip inisiyatif alabildiği zaman ülke olarak nefes alabiliriz. Onlara sadece görev değil, bugünün dünyasında gerçek bir söz hakkı tanımak zorundayız.</p>
-                `
-            },
-            {
-                type: 'section-divider',
-                content: `
-                    <div class="section-icon">♀</div>
-                    <h2>KADIN VE SİYASET</h2>
-                    <p style="margin-top: 20px; opacity: 0.8;">Servet Tetik<br>CHP Merkezefendi Kadın Kolları Başkanı</p>
-                `
-            },
-            // Sayfa 19-20: Servet Tetik Yazısı Devamı
-            {
-                type: 'content-page',
-                title: 'Kadın ve Siyaset',
-                author: 'Servet Tetik',
-                content: `
-                    <p>Demokrasinin sağlıklı işlemesi, toplumun tüm kesimlerinin karar alma süreçlerinde yer alabilmesine bağlıdır. Nüfusun yarısını oluşturan kadınların siyasette yeterince temsil edilmemesi, demokratik yapının eksik kalmasına neden olur.</p>
-                    
-                    <p>Parlamento ve yerel yönetimlerde kadın oranı yükseldikçe, siyasal temsiliyet toplumun gerçek yapısına daha çok yaklaşır ve karar mekanizmaları daha dengeli hale gelir. Bu durum da kamu kurumlarına duyulan güveni güçlendirir.</p>
-                    
-                    <p>Dünya genelinde kadınlar ekonomik açıdan daha kırılgan konumdadır. Yoksulluk oranları daha yüksektir; şiddet, ayrımcılık ve eşitsizlikle daha sık karşılaşırlar. Çalışma hayatına katılabilseler bile çoğu zaman erkeklerle aynı ücreti alamazlar.</p>
-                    
-                    <div class="quote-box">
-                        <p>Kadınların siyasal alanda daha fazla yer alması, yalnızca kadın hakları açısından değil, aynı zamanda genel toplumsal politikalar bakımından da olumlu sonuçlar doğurmaktadır.</p>
-                    </div>
-                `
-            },
-            {
-                type: 'content-page',
-                title: 'Kadın ve Siyaset (Devam)',
-                author: 'Servet Tetik',
-                content: `
-                    <p>Araştırmalar, kadın temsilinin arttığı ülkelerde sosyal harcamaların özellikle eğitim, sağlık ve bakım hizmetlerine yöneldiğini göstermektedir. Kadın siyasetçiler; çocukların, yaşlıların, engellilerin ve dezavantajlı grupların ihtiyaçlarına daha fazla dikkat çekmekte ve bu alanlarda düzenlemelerin hayata geçirilmesinde aktif rol oynamaktadır.</p>
-                    
-                    <p>Birçok toplumda bakım sorumluluğu ağırlıkla kadınların omuzlarındadır. Bu nedenle kadınlar, aile içindeki farklı kuşakların ve ihtiyaç gruplarının sorunlarına doğrudan tanıklık eder. Bu deneyim, onların sosyal politika üretiminde daha kapsayıcı ve duyarlı bir perspektif geliştirmesini sağlar.</p>
-                    
-                    <p>Kadınların siyasete katılımındaki artışın, özellikle gelişmekte olan ülkelerde sosyoekonomik göstergeleri iyileştirdiğine dair veriler bulunmaktadır. Çocukların sağlık ve eğitim koşullarının iyileştiği, sosyal refahın güçlendiği gözlemlenmektedir.</p>
-                    
-                    <div class="info-box">
-                        <h4>Sonuç</h4>
-                        <p>Kadınların siyasi yaşamda daha görünür ve etkili olması, yalnızca eşitlik talebinin karşılanması anlamına gelmez; aynı zamanda toplumun genel refahının ve demokratik kalitesinin yükselmesine katkı sağlar.</p>
-                    </div>
-                `
-            },
-            // Sayfa 21-22: Fatih Yıldırım Yazısı
-            {
-                type: 'section-divider',
-                content: `
-                    <div class="section-icon">◉</div>
-                    <h2>ELEŞTİREL TEORİ ÜZERİNE</h2>
-                    <p style="margin-top: 20px; opacity: 0.8;">Fatih Yıldırım<br>CHP Merkezefendi Gençlik Kolları Yöneticisi</p>
-                `
-            },
-            {
-                type: 'content-page',
-                title: 'Eleştirel Teori Üzerine',
-                author: 'Fatih Yıldırım',
-                content: `
-                    <p>Eleştirel teoriyi tanımlamaya başlamadan önce kısaca Frankfurt Okulu'na değinmek yerinde olacaktır. 1923 yılında Frankfurt Üniversitesi Sosyal Araştırmalar Enstitüsü olarak Almanya'da kurulan okul, önceleri Marksizm'in çeşitli argümanlarını bir merkezde toplamak amacındaydı.</p>
-                    
-                    <p>Okulu düşünsel bağlamda şekillendiren ise Marx'ın öngördüğü proletarya devriminin başarısız olması, Nazizm'in yükselişi ve kapitalizmin Henry Ford etkisiyle Fordizm olarak yeni bir üretim biçimine evrilmesi gibi olayların meydana gelmesidir.</p>
-                    
-                    <p>Teoriden bahsederken olabildiğince jargona kaçmadan gayet sarih bir yol izlemek istiyorum. Eleştirel teori, insanların bir zorlama ve baskılama içinde olduklarını ve bundan kaynaklı gerçek çıkarlarını bil(e)mediklerini öne sürerek, doğru çıkarlarının nerede olduğunu gösterip onları özgürlüğe ve aydınlığa kavuşturmayı amaçlar.</p>
-                    
-                    <div class="quote-box">
-                        <p>Eleştirel teoriyi açıklarken, onu bilimsel teorilerle mukayese etmek yerinde olacaktır. Bilimsel teoriler somutlaştırıcıdır. Eleştirel teoriler ise kendi kendine gönderme yapar, yani dönüşlüdürler.</p>
-                    </div>
-                `
-            },
-            // Sayfa 23-24: Fatih Yıldırım Yazısı Devamı
-            {
-                type: 'content-page',
-                title: 'Eleştirel Teori Üzerine (Devam)',
-                author: 'Fatih Yıldırım',
-                content: `
-                    <p>Frankfurt Okulu temsilcileri, bilimsel teorilerin ve verili bir bilimsel teknolojinin insanlar tarafından her zaman koşullu olarak rasyonel olduğunu söyler. Daha açık olmak gerekirse, somut bir teknolojik gelişme benim çıkarıma uygunsa, rasyonellik konusunda hiçbir sorun yoktur; fakat bu gelişme benim çıkarıma değilse, bu teknolojiyi kabul etmem benim için rasyonel değildir.</p>
-                    
-                    <p>Tam da bu noktada, eleştirel teori, tikel bir grup tarafından benimsenmenin önemli olduğunu söyler. Teori, insanların nasıl hareket edeceklerinin rasyonel olacağını ve hatta hangi çıkarların rasyonel olduğunu onlara gösterdiğini öne sürer.</p>
-                    
-                    <p>Daha önce de belirtildiği gibi, eleştirel teori özgürleşme ve aydınlanmayı hedefler. Bu hususta, bir başlangıçtan nihai sonuca doğru toplumsal geçişi anlatır. Başlangıç halinde, gruplar yanlış bilinç ve özgür olmayan varoluş durumundadır.</p>
-                    
-                    <p>Bu durumda, insanlar yanlış bilinçle, görünüşteki çıkarlarla toplumsal kurumlar oluşturur ve bu kurumların kendilerini baskıladığını bilmelerine rağmen, meşru oldukları gerekçesiyle tepkisizdirler. Eleştirel teori, insanları bu durumdan kurtararak onları nihai sonuca (özgürleşme ve aydınlanmaya) götürdüğünü iddia eder.</p>
-                `
-            },
-            {
-                type: 'section-divider',
-                content: `
-                    <div class="section-icon">★</div>
-                    <h2>TÜRK GENÇLİĞİ;<br>DAİMA İLERİ!</h2>
-                    <p style="margin-top: 20px; opacity: 0.8;">Erkan Köken<br>CHP Merkezefendi Gençlik Kolları Başkanı</p>
-                `
-            },
-            // Sayfa 25-26: Erkan Köken Yazısı
-            {
-                type: 'content-page',
-                title: 'Türk Gençliği; Daima İleri!',
-                author: 'Erkan Köken',
-                content: `
-                    <div class="quote-box">
-                        <p>"Umutsuz durumlar yoktur, umutsuz insanlar vardır. Ben hiçbir zaman umudumu yitirmedim." - Gazi Mustafa Kemal Atatürk</p>
-                    </div>
-                    
-                    <p>Bu söz, bugün de yolumuzu aydınlatıyor. 29 Mayıs 2023 sabahı, umutların azaldığı bir ortamda, İstanbul'un fethinin yıl dönümünde İstanbul Büyükşehir Belediye Başkanımız Sayın Ekrem İmamoğlu, "Değişmeyen tek şey değişimdir." diyerek umutlarımızı yeniden canlandırdı.</p>
-                    
-                    <p>Yaklaşık dört ay sonra, Genel Başkanımız Sayın Özgür Özel'in kazandığı Değişim Kurultayı ile partimiz özgürlük mücadelesinde daha güçlü ve kararlı bir konuma geldi. Bu süreçte Cumhuriyet Halk Partisi, yerel seçimlerde Türkiye'nin birinci partisi olarak tarihi bir başarı elde etti.</p>
-                    
-                    <p>Kazanılan belediyelerde uygulanan sosyal belediyecilik ve halkçı yaklaşımlar, milletimize CHP iktidarının yönetim anlayışını somut olarak gösterdi.</p>
-                    
-                    <p>Ancak 18 Mart akşamı üniversite diplomasının iptali ve 19 Mart sabahı gözaltına alınması, demokrasiye açık bir darbe olarak hafızalara kazındı. Yirmi iki yıldır aşındırılan hukuk devleti ilkesine bir darbe daha vurulmak istendi.</p>
-                `
-            },
-            {
-                type: 'content-page',
-                title: 'Türk Gençliği; Daima İleri! (Devam)',
-                author: 'Erkan Köken',
-                content: `
-                    <p>19 Mart'ta barikatların önünde duran öğrenciler ve sokağa çıkan yurttaşlarımız, parti ayrımı gözetmeksizin "Artık yeter!" demek için meydanlardaydı. Anayasal haklarını kullanan halkın karşısına ise barikatlar, coplar, plastik mermiler, TOMA'lar ve gözaltılar çıkarıldı.</p>
-                    
-                    <div class="quote-box">
-                        <p>Ancak unutulan bir gerçek vardı: Gençlik susmaz, teslim olmaz.</p>
-                    </div>
-                    
-                    <p>Gençliğin sesi kesilirse, ülkenin geleceği karanlığa gömülür. Bu nedenle susmadık, korkmadık ve geri adım atmadık. İstanbul ve Ankara başta olmak üzere birçok şehirde gençler, orantısız müdahalelere rağmen baskıya karşı direndi.</p>
-                    
-                    <p>Çünkü biliyoruz ki dağınık tepkiler değil, birleşik mücadeleler sonuç verir. Bu süreçte, 23 Mart'ta milyonlar sandığa gitti. 15,5 milyon yurttaşımızın oyuyla Ekrem İmamoğlu, Cumhuriyet Halk Partisi'nin Cumhurbaşkanı adayı oldu.</p>
-                    
-                    <p>Bizler, umutsuzluğu kabul etmeyen ve mücadeleden vazgeçmeyen bir geleneğin temsilcileriyiz. Cumhuriyet'in emanet edildiği gençlik olarak, üzerimize düşen sorumluluğun bilincindeyiz.</p>
-                `
-            },
-            // Sayfa 27-28: Bulmaca ve Anma
-            {
-                type: 'puzzle-page',
-                title: 'Bulmaca',
-                content: `
-                    <div class="puzzle-grid">
-                        <div class="puzzle-section">
-                            <h4>YATAY</h4>
-                            <div class="puzzle-clue" data-num="5.">CHP Gençlik Kolları'nın ilk genel başkanı olarak görev yapmıştır.</div>
-                            <div class="puzzle-clue" data-num="7.">Yerel mahkeme olarak Anayasa Mahkemesi kararını uygulamayan ilk hakimin görev yaptığı bakanlık.</div>
-                            <div class="puzzle-clue" data-num="8.">Ülkeler veya şehirler arasında yapılan uzun yolculuk; seyahat.</div>
-                        </div>
-                        <div class="puzzle-section">
-                            <h4>DİKEY</h4>
-                            <div class="puzzle-clue" data-num="1.">24 Haziran 1920'de Aydın Cephesi bozulunca Yunanlılar...'ı işgal etmiştir.</div>
-                            <div class="puzzle-clue" data-num="2.">5 Mayıs 1960 tarihinde, Ankara'da, Demokrat Parti aleyhtarı öğrencilerin yaptığı protesto eylemi.</div>
-                            <div class="puzzle-clue" data-num="3.">Bakan eskisi.</div>
-                            <div class="puzzle-clue" data-num="4.">Dünyanın en büyük "siyasi" hapishanelerinden biri.</div>
-                            <div class="puzzle-clue" data-num="6.">Denizli'nin 616 tane... vardır.</div>
-                        </div>
-                    </div>
-                `
-            },
-            {
-                type: 'memorial-page',
-                content: `
-                    <div class="candle">🕯</div>
-                    <h2>SENİ UNUTMAYACAĞIZ<br>NACİ AĞABEY...</h2>
-                    <div class="poem-text" style="margin-top: 30px;">
-                        Dağlarda tek tek ateşler yanıyordu.<br>
-                        Ve yıldızlar öyle ışıltılı, öle ferahtılar ki<br>
-                        şayak kalpaklı adam<br>
-                        nasıl ve ne zaman geleceğini bilmeden<br>
-                        güzel, rahat günlere inanıyordu...<br><br>
-                        Yıldızlar yoldaşın olsun.<br>
-                        Mehmet Ağabey...
-                    </div>
-                    <p style="margin-top: 40px; font-style: italic; opacity: 0.8;">
-                        Özgürlüğün türküsünü demeye geleceğiz...
-                    </p>
-                `
-            }
-        ];
-
-        let currentPage = 0;
-        const totalPages = pages.length;
-
-        function initBook() {
-            const book = document.getElementById('book');
-            
-            pages.forEach((page, index) => {
-                const pageEl = document.createElement('div');
-                pageEl.className = `page ${index % 2 === 1 ? 'right' : ''}`;
-                pageEl.id = `page-${index}`;
-                pageEl.style.zIndex = totalPages - index;
-                
-                let contentHTML = '';
-                
-                if (page.type === 'cover-front' || page.type === 'cover-back' || 
-                    page.type === 'section-divider' || page.type === 'memorial-page') {
-                    contentHTML = `<div class="page-content ${page.type}">${page.content}</div>`;
-                } else if (page.type === 'toc-page') {
-                    contentHTML = `<div class="page-content toc-page">${page.content}</div>`;
-                } else if (page.type === 'puzzle-page') {
-                    contentHTML = `
-                        <div class="page-content puzzle-page">
-                            <div class="page-header">
-                                <h2>${page.title}</h2>
-                            </div>
-                            ${page.content}
-                        </div>
-                    `;
-                } else {
-                    contentHTML = `
-                        <div class="page-content content-page">
-                            <div class="page-header">
-                                <h2>${page.title}</h2>
-                                <div class="author">${page.author}</div>
-                            </div>
-                            <div class="article-content">${page.content}</div>
-                        </div>
-                    `;
-                }
-                
-                pageEl.innerHTML = contentHTML;
-                book.appendChild(pageEl);
-            });
-            
-            updateControls();
-        }
-
-        function nextPage() {
-            if (currentPage < totalPages - 2) {
-                const currentLeft = document.getElementById(`page-${currentPage}`);
-                const currentRight = document.getElementById(`page-${currentPage + 1}`);
-                
-                if (currentLeft) currentLeft.classList.add('flipped');
-                if (currentRight) currentRight.classList.add('flipped');
-                
-                currentPage += 2;
-                updateControls();
-            }
-        }
-
-        function prevPage() {
-            if (currentPage >= 2) {
-                currentPage -= 2;
-                
-                const prevLeft = document.getElementById(`page-${currentPage}`);
-                const prevRight = document.getElementById(`page-${currentPage + 1}`);
-                
-                if (prevLeft) prevLeft.classList.remove('flipped');
-                if (prevRight) prevRight.classList.remove('flipped');
-                
-                updateControls();
-            }
-        }
-
-        function goToPage(pageNum) {
-            // 0-indexed page numarasına çevir
-            const targetPage = (pageNum - 1) * 2;
-            
-            // Tüm sayfaları sıfırla
-            for (let i = 0; i < totalPages; i++) {
-                const page = document.getElementById(`page-${i}`);
-                if (page) {
-                    if (i < targetPage) {
-                        page.classList.add('flipped');
-                    } else {
-                        page.classList.remove('flipped');
-                    }
-                }
-            }
-            
-            currentPage = targetPage;
-            updateControls();
-        }
-
-        function updateControls() {
-            document.getElementById('pageIndicator').textContent = 
-                `${Math.floor(currentPage / 2) + 1} / ${Math.ceil(totalPages / 2)}`;
-            
-            document.getElementById('prevBtn').disabled = currentPage === 0;
-            document.getElementById('nextBtn').disabled = currentPage >= totalPages - 2;
-        }
-
-        // Klavye navigasyonu
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextPage();
-            if (e.key === 'ArrowLeft') prevPage();
-        });
-
-        // Dokunmatik navigasyon
-        let touchStartX = 0;
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-        });
-
-        document.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].clientX;
-            const diff = touchStartX - touchEndX;
-            
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) nextPage();
-                else prevPage();
-            }
-        });
-
-        // Kitabı başlat
-        initBook();
-    </script>
+  </div>
 </body>
 </html>
